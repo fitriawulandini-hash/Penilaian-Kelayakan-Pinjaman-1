@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Kelayakan Pinjaman - Tugas Pertemuan 1</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 40px; display: flex; justify-content: center; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { color: #1a73e8; margin-top: 0; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        button { background-color: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background-color: #1557b0; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 6px; background-color: #e8f0fe; color: #174ea6; font-weight: bold; text-align: center; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Simulasi Kelayakan Kredit</h2>
+        
+        <div class="form-group">
+            <label for="pendapatan">Pendapatan Bulanan ($):</label>
+            <input type="number" id="pendapatan" placeholder="Contoh: 5000">
+        </div>
+
+        <div class="form-group">
+            <label for="pinjaman">Jumlah Pinjaman yang Diajukan ($):</label>
+            <input type="number" id="pinjaman" placeholder="Contoh: 15000">
+        </div>
+
+        <div class="form-group">
+            <label for="kredit">Riwayat Kredit:</label>
+            <select id="kredit">
+                <option value="baik">Baik</option>
+                <option value="buruk">Buruk</option>
+            </select>
+        </div>
+
+        <button onclick="cekKelayakan()">Cek Status Kelayakan</button>
+
+        <div id="hasil" class="result"></div>
+    </div>
+
+    <script>
+        function cekKelayakan() {
+            let pendapatan = parseFloat(document.getElementById('pendapatan').value);
+            let pinjaman = parseFloat(document.getElementById('pinjaman').value);
+            let kredit = document.getElementById('kredit').value;
+            let hasilDiv = document.getElementById('hasil');
+
+            if (isNaN(pendapatan) || isNaN(pinjaman)) {
+                hasilDiv.style.display = 'block';
+                hasilDiv.style.backgroundColor = '#fce8e6';
+                hasilDiv.style.color = '#c5221f';
+                hasilDiv.innerText = 'Mohon isi semua kolom angka dengan benar!';
+                return;
+            }
+
+            let status = "";
+            let warnaBg = "#e8f0fe";
+            let warnaText = "#174ea6";
+
+            if (kredit === 'buruk') {
+                status = "DITOLAK: Riwayat Kredit Buruk";
+                warnaBg = "#fce8e6"; warnaText = "#c5221f";
+            } else if (pendapatan < 3000) {
+                status = "DITOLAK: Pendapatan di bawah batas minimum ($3,000)";
+                warnaBg = "#fce8e6"; warnaText = "#c5221f";
+            } else if (pinjaman > (pendapatan * 5)) {
+                status = "DITOLAK: Jumlah pinjaman melebihi 5x pendapatan";
+                warnaBg = "#fce8e6"; warnaText = "#c5221f";
+            } else {
+                status = "DISETUJUI: Nasabah Layak Mendapatkan Pinjaman 🎉";
+                warnaBg = "#e6f4ea"; warnaText = "#137333";
+            }
+
+            hasilDiv.style.display = 'block';
+            hasilDiv.style.backgroundColor = warnaBg;
+            hasilDiv.style.color = warnaText;
+            hasilDiv.innerText = status;
+        }
+    </script>
+
+</body>
+</html>

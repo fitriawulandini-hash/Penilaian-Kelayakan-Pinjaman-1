@@ -1,3 +1,5 @@
+website: https://fitriawulandini-hash.github.io/Penilaian-Kelayakan-Pinjaman-1/
+
 Penilaian Kelayakan Pinjaman
 
 Repositori ini berisi implementasi program Python sederhana untuk menentukan kelayakan pengajuan pinjaman nasabah.
